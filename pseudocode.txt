@@ -2,6 +2,7 @@ initialize a list for the three players
 initialize a list for wheel with 24 segments players can land on, in order of the wheel 
 initialize dictionary for players' money with player1, player2, player3 and 0 for the values
 initialize win list of who won round
+initalize list of words with only 5 letters and more
 
 who goes first function:
     randomly pick from 3 players
@@ -14,7 +15,7 @@ who goes next function:
     if 3, set current player to 1
 
 play round function:
-    randomly pick word
+    randomly pick word from list of words
     display word
     set round money to 0
     set spin money to 0
@@ -88,7 +89,7 @@ spin the wheel function
 bonus round function
     pick player with highest bank account 
         if tied, player with most game won ??? if tied again?
-    pick word
+    randomly pick word from list of words
     display word with with R-S-T-L-N-E revealed
     prompt player to guess 3 consenants and 1 vowel
     validate input

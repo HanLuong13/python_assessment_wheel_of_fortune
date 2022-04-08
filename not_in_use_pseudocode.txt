@@ -1,6 +1,7 @@
-create a list for the three players
-create a list for wheel with 24 segments players can land on, in order of the wheel 
+initialize a list for the three players
+initialize a list for wheel with 24 segments players can land on, in order of the wheel 
 initialize dictionary for players' money with player1, player2, player3 and 0 for the values
+initialize win list of who won round
 
 who goes first function:
     randomly pick from 3 players
