@@ -2,8 +2,21 @@ rules:
 -start with 3 players, 2 rounds (third round is bonus round)
 -beginning of round, the word is diplayed, randomly picked player goes first
 
--a turn for a player
-    -they can 1. buy a vowel, 2. spin the wheel to guess a consenant, 3. guess a consenant or 4.guess the word
+
+-turn for a player
+    -they can spin the wheel to guess a consenant
+        -spin the wheel
+            -if they haven't spinned the wheel, they will need to get a $
+            -if they land on bankruptcy they lose $ for that round and their turn ends
+            -if they land on lose a turn, they get the $ for that round and their turn ends
+            -if they land on free spin, they get an extra spin at the end of their turn
+            -if they land on $, they guess a consenant
+                -guessing a consenant
+                    -if consenant is not in word, they get the $ for that round and their turn ends
+                    -if consenant is in word, count how many times <x>, they get <x> times they amount they landed on and their turn continues
+                        -go into second turn
+-second & repeating turn for a player
+    -they can 1. buy a vowel, 2. spin the wheel to guess a consenant or 4.guess the word
         -1. buy a vowel
             -if they want to buy a vowel, they must have more than $250 in their bank, they have to re-choose
             -if vowel is not in word, they lose 250 and their turn ends
@@ -16,12 +29,9 @@ rules:
                 -if they land on $, they guess a consenant 
             -guessing a consenant
                 -if consenant is in word, count how many times <x>, they get <x> times current spin money and their turn continues
-                -if consenant is not in word, they get the $ for that round and their turn ends
-        -3. guess a consenant
-                -if there's a current spin money, they can go
-                -if there isn't, they have to re-choose
-        -4. guess the word
-                -if they guess word right, they get the $ for that round and the round ends
+                -if consenant is not in word, they get the $ for that turn and their turn ends
+        -5. guess the word
+                -if they guess word right, they get the $ for that turn and the round ends
                 -if they guessed the wrond word, they get the $ for that round and their turn ends
 
 -when a turn ends, the next chronological player goes
@@ -42,17 +52,7 @@ other logic: probably not usable
 
 
 
--turn for a player
-    -they can spin the wheel to guess a consenant
-        -spin the wheel
-            -if they haven't spinned the wheel, they will need to get a $
-            -if they land on bankruptcy they lose $ for that round and their turn ends
-            -if they land on lose a turn, they get the $ for that round and their turn ends
-            -if they land on free spin, they get an extra spin at the end of their turn
-            -if they land on $, they guess a consenant
-                -guessing a consenant
-                    -if consenant is not in word, they get the $ for that round and their turn ends
-                    -if consenant is in word, count how many times <x>, they get <x> times they amount they landed on and their turn continues
+
                         -second turn for a player            
                             -they can 1. buy a vowel, 2. respin the wheel to guess a consenant, 3. guess a consenant or 4. guess the word
                                 -buy a vowel
