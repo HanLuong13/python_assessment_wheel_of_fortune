@@ -1,0 +1,38 @@
+rules: 
+-start with 3 players, 2 rounds (third round is bonus round)
+-beginning of round, the word is diplayed, randomly picked player goes first
+-a turn for a player
+    -they can buy a vowel, spin the wheel to guess a consenant, or guess the word
+        -buy a vowel
+            -if they want to buy a vowel, they must have more than $250 in their bank
+            -if vowel is not in word, they lose 250 and their turn ends
+            -if vowel is in word, they lose 250 and continues turn
+        -spin the wheel to guess a consenant
+            -spin the wheel 
+                -if they land on bankruptcy they lose $ for that round and their turn ends
+                -if they land on lose a turn, they get the $ for that round and their turn ends
+                -if they land on free spin, they get an extra spin at the end of their turn
+                -if they land on $, they guess a consenant 
+            -guessing a consenant
+                -if consenant is in word, count how many times <x>, they get <x> times they amount they landed on and their turn continues
+                -if consenant is not in word, they get the $ for that round and their turn ends
+        -guess the word
+                -if they guess word right, they get the $ for that round and the round ends
+                -if they guessed the wrond word, they get the $ for that round and their turn ends
+-when a turn ends, the next chronological player goes
+-when round 1 ends, round 2 begins, round 2 is exact of round 1
+-when round 2 ends, bonus round begins, player with most in their bank is the only player
+-bonus round
+    -word is displayed with R-S-T-L-N-E revealed
+    -player gets to guess 3 consenants and 1 vowel, no cost
+    -once they make their guess, those consenants and vowel are revealed
+    -they have 5 seconds to guess word
+        -if timer runs out, they lost
+        -if guess wrong, they lost
+        -if 
+
+
+create a list for wheel with 24 segments players can land on, in order of the wheel 
+
+
+dictionary to store the players' money 
