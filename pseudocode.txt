@@ -1,38 +1,116 @@
-rules: 
--start with 3 players, 2 rounds (third round is bonus round)
--beginning of round, the word is diplayed, randomly picked player goes first
--a turn for a player
-    -they can buy a vowel, spin the wheel to guess a consenant, or guess the word
-        -buy a vowel
-            -if they want to buy a vowel, they must have more than $250 in their bank
-            -if vowel is not in word, they lose 250 and their turn ends
-            -if vowel is in word, they lose 250 and continues turn
-        -spin the wheel to guess a consenant
-            -spin the wheel 
-                -if they land on bankruptcy they lose $ for that round and their turn ends
-                -if they land on lose a turn, they get the $ for that round and their turn ends
-                -if they land on free spin, they get an extra spin at the end of their turn
-                -if they land on $, they guess a consenant 
-            -guessing a consenant
-                -if consenant is in word, count how many times <x>, they get <x> times they amount they landed on and their turn continues
-                -if consenant is not in word, they get the $ for that round and their turn ends
-        -guess the word
-                -if they guess word right, they get the $ for that round and the round ends
-                -if they guessed the wrond word, they get the $ for that round and their turn ends
--when a turn ends, the next chronological player goes
--when round 1 ends, round 2 begins, round 2 is exact of round 1
--when round 2 ends, bonus round begins, player with most in their bank is the only player
--bonus round
-    -word is displayed with R-S-T-L-N-E revealed
-    -player gets to guess 3 consenants and 1 vowel, no cost
-    -once they make their guess, those consenants and vowel are revealed
-    -they have 5 seconds to guess word
-        -if timer runs out, they lost
-        -if guess wrong, they lost
-        -if 
+initialize a list for the three players
+initialize a list for wheel with 24 segments players can land on, in order of the wheel 
+initialize dictionary for players' money with player1, player2, player3 and 0 for the values
+initialize win list of who won round
+
+who goes first function:
+    randomly pick from 3 players
+    return current player
+
+who goes next function:
+    find key for current player in list
+    if 1, set current player to 2
+    if 2, set current player to 2
+    if 3, set current player to 1
+
+play round function:
+    randomly pick word
+    display word
+    set round money to 0
+    set spin money to 0
+    menu: player pick from 4 choices
+        1. buy a vowel, 
+        2. spin the wheel to guess a consenant, 
+        3. guess a consenant or 
+        4.guess the word
+    validate their input from 1-4
+    if 1. buy a vowel
+        if they want to buy a vowel
+            check bank account
+            if more than 250, prompt for guess
+                validate guess
+                if vowel is not in word
+                    they lose 250 and their turn ends
+                if vowel is in word
+                    they lose 250 and continues turn
+                    back to menu
+            if they don't have 250 in bank
+                rechoose from menu
+    if 2. spin the wheel to guess a consenant
+        spin the wheel
+        if wheel segment is bankruptcy
+            they lose $ for that round and their turn ends
+        if wheel segment is lose a turn
+            they get the $ for that round and their turn ends
+        if wheel segment is free spin
+            they get an extra spin at the end of their turn
+        if wheel segment is a number
+            add number to spin money
+            they guess a consenant
+        prompt player for a consenant
+        validate input
+        if consenant in already guessed consenant list
+            tell them already guessed, prompt again
+        if consenant is not in word
+            they get the $ for that round and their turn ends
+        if consenant in word
+            count how many times <x>, they get <x> times the current spin $ and their turn continues
+            if word is complete
+                round ends and add to win list current play name            
+            back to menu
+    if 3. guess a consenant
+        if there's current spin money   
+            prompt player for a consenant
+            validate input
+            if consenant in already guessed consenant list
+                tell them already guessed, prompt again
+            if consenant is not in word
+                they get the $ for that round and their turn ends
+            if consenant in word
+                count how many times <x>, they get <x> times the current spin $ and their turn continues
+                if word is complete
+                    round ends and add to win list current play name
+                back to menu
+        if there isn't current spin money
+            tell them spin first, back to menu
+    if 4. guess the word
+        if they guess word right
+            they get the $ for that round and the round ends
+            add to win list current play name
+        if they guessed the wrond word 
+            they get the $ for that round and their turn ends
+    
+spin the wheel function
+    create wheel segment string
+    random pick from wheel list, assign to wheel segment
+    return wheel segment
+
+bonus round function
+    pick player with highest bank account 
+        if tied, player with most game won ??? if tied again?
+    pick word
+    display word with with R-S-T-L-N-E revealed
+    prompt player to guess 3 consenants and 1 vowel
+    validate input
+    display word with reveal of their choices
+    tell them they have 5 seconds
+    put on timer to countdown
+    prompt them for input
+        if timer runs out
+            they lost
+        if their input is not word
+            they lost
+        if input is word
+            they win their bank money and a create
+    game ends
 
 
-create a list for wheel with 24 segments players can land on, in order of the wheel 
+
+who goes first function to pick first player
+play round function
+who goes next function
+play round function
+
+bonus round function
 
 
-dictionary to store the players' money 

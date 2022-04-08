@@ -1,0 +1,81 @@
+create a list for the three players
+create a list for wheel with 24 segments players can land on, in order of the wheel 
+initialize dictionary for players' money with player1, player2, player3 and 0 for the values
+
+who goes first function:
+    randomly pick from 3 players
+    return current player
+
+who goes next function:
+    find key for current player in list
+    if 1, set current player to 2
+    if 2, set current player to 2
+    if 3, set current player to 1
+
+round function:
+    randomly pick word
+    display word
+    set turn to 1
+    set round money to 0
+    first turn is valid
+    if first turn is on 
+    while turn is greater or equal to 1
+        prompt current player to choose from 3 choices
+            1. buy a vowel
+            2. guess a consenant
+            3. guess the word
+            set player choice to input
+        if input is 1. buy a vowel
+            find money amount in their bank
+            if they have more than 250
+                guess input is not valid
+                tell them you don't have money, guess again
+                while guess input is not valid and turn is greater or equal to 1
+                    prompt player for a vowel
+                        if vowel in already guessed vowel list
+                            tell them already guessed, prompt again
+                        if vowel is not in word
+                            take 250 from bank and their turn ends
+                            guess input is valid
+                            turn minus 1
+                        if vowel in word
+                            take 250 from bank and their turn continues
+                            guess input is valid
+        if input is 2. guess a consenant
+            spin the wheel function
+            wheel spin is invalid
+            set spin money to 0
+            while wheel spin is invalid
+                if wheel segment is bankruptcy
+                    turn minus 1
+                    wheel spin is valid
+                if wheel segment is lose a turn
+                    add round money to current player dictionary money
+                    turn minus 1
+                    wheel spin is valid
+                if wheel segment is free spin
+                    turn add 1
+                if wheel segment is a number
+                    add number to spin money
+                    wheel spin is valid
+            guess input is not valid
+            while guess input is not valid and turn is greater or equal to 1
+                    prompt player for a consenant
+                        if consenant in already guessed consenant list
+                            tell them already guessed, prompt again
+                        if consenant is not in word
+                            their turn ends
+                            guess input is valid
+                            turn minus 1
+                        if consenant in word
+                            count consenant in word
+                            money won = count x spin money
+                            guess input is valid
+            
+
+spin the wheel function
+    create wheel segment string
+    random pick from wheel list, assign to wheel segment
+    return wheel segment
+
+who goes first function to pick first player
