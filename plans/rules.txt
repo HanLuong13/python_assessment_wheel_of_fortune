@@ -21,7 +21,7 @@ second & repeating turn for a player
         1. buy a vowel
             if they want to buy a vowel, they must have more than $250 in their bank, 
             otherwise they have to rechoose
-            if vowel is not in word, they lose 250 and their turn ends
+            if guess is not in word, already guessed, not a vowel, they lose 250 and their turn ends
             if vowel is in word, they lose 250 and continues turn
         2. spin the wheel to guess a consonant
             spin the wheel 
@@ -31,7 +31,7 @@ second & repeating turn for a player
             guessing a consonant
                 if consonant is in word, count how many times <x>, they get <x> times current 
                 spin money and their turn continues
-                if consonant is not in word, they get the $ for that turn and their turn ends
+                if guess is not a consonant or consonant is not in word, they get the $ for that turn and their turn ends
         5. guess the word
                 if they guess word right, they get the $ for that turn, they get to keep the 
                 money from that round 
