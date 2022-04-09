@@ -1,6 +1,6 @@
 initialize a list for the three players
 initialize a list for wheel with segments players can land on, in order of the wheel 
-initalize list of words with only 5 letters and more
+initialize list of words with only 5 letters and more
 
 initialize dictionary for players' permanent money with player1, player2, player3 and 
 0 for the values
@@ -34,22 +34,23 @@ play round function
         who goes next function
     if wheel segment is a number
         set spin money to $amount
-        prompt them for consenant
-        validate consenant
-        if consenant is not in word
+        prompt them for consonant
+        if consonant is not in word
             their turn ends & next player goes
             who goes next function
-        if consenant is in word
+        if consonant is in word
             display word
-            count how many times the consenant appears 
+            count how many times the consonant appears 
             they get <x> multiply the spin $amount they landed on added to their round money                     
             go into second turn
-    
+        if they guess an already guess letter or a vowel
+            their turn ends & next player goes
+            
     find out if word only have vowels left unrevealed 
     if not
         display menu from player and prompt player to pick from 3 choices
             1. buy a vowel
-            2. spin the wheel to guess a consenant
+            2. spin the wheel to guess a consonant
             3. guess the word
 
         validate their input from 1-3
@@ -76,7 +77,7 @@ play round function
                 if they don't have 250 in round money
                     back to menu
 
-        if 2. spin the wheel to guess a consenant
+        if 2. spin the wheel to guess a consonant
             spin the wheel function
             if wheel segment is bankruptcy
                 set round money to 0
@@ -88,18 +89,18 @@ play round function
                 who goes next function
             if wheel segment is a number
                 set spin money to $amount
-                prompt them for consenant
-                validate consenant
-                if consenant in already guessed consenant list
+                prompt them for consonant
+                validate consonant
+                if consonant in already guessed consonant list
                     tell them already guessed
                     prompt again
-                if consenant is not in word
+                if consonant is not in word
                     add turn money to round money
                     their turn ends & next player goes
                     who goes next function
-                if consenant is in word
+                if consonant is in word
                     display word
-                    count how many times the consenant appears 
+                    count how many times the consonant appears 
                     they get <x> multiply the spin $amount they landed on added to their round money
                     if word is complete
                         display word
@@ -169,7 +170,7 @@ bonus round function
     pick player with highest permanent money 
     randomly pick word from list of words
     display word with with R-S-T-L-N-E revealed
-    prompt player to guess 3 consenants and 1 vowel
+    prompt player to guess 3 consonants and 1 vowel
     validate input
     display word with reveal of their choices
     tell them they have 5 seconds

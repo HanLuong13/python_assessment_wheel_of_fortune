@@ -4,34 +4,34 @@ beginning of round, the word is diplayed, randomly picked player goes first
 
 
 first turn for a player
-    spin the wheel to guess a consenant
+    spin the wheel to guess a consonant
         if they land on bankruptcy, their turn ends
         if they land on lose a turn, their turn ends
-        if they land on $, they guess a consenant
-            guessing a consenant
-                if consenant is not in word, their turn ends
-                if consenant is in word, count how many times <x>, they get <x> times 
-                they amount 
-                they landed on into their round money and their turn continues
+        if they land on $, they guess a consonant
+            guessing a consonant
+                if consonant is not in word, their turn ends
+                if consonant is in word, count how many times <x>, they get <x> times 
+                    they amount they landed on into their round money and their turn continues
                     go into second turn
+                if not consonant, their turn ends
 
 second & repeating turn for a player
     if word is limited to only vowels, only option 1 and 3 will be available 
-    they can 1. buy a vowel, 2. spin the wheel to guess a consenant or 3.guess the word
+    they can 1. buy a vowel, 2. spin the wheel to guess a consonant or 3.guess the word
         1. buy a vowel
             if they want to buy a vowel, they must have more than $250 in their bank, 
             otherwise they have to rechoose
             if vowel is not in word, they lose 250 and their turn ends
             if vowel is in word, they lose 250 and continues turn
-        2. spin the wheel to guess a consenant
+        2. spin the wheel to guess a consonant
             spin the wheel 
                 if they land on bankruptcy they lose $ for that turn and their turn ends
                 if they land on lose a turn, they get the $ for that turn and their turn ends
-                if they land on $, they guess a consenant 
-            guessing a consenant
-                if consenant is in word, count how many times <x>, they get <x> times current 
+                if they land on $, they guess a consonant 
+            guessing a consonant
+                if consonant is in word, count how many times <x>, they get <x> times current 
                 spin money and their turn continues
-                if consenant is not in word, they get the $ for that turn and their turn ends
+                if consonant is not in word, they get the $ for that turn and their turn ends
         5. guess the word
                 if they guess word right, they get the $ for that turn, they get to keep the 
                 money from that round 
@@ -45,8 +45,8 @@ when round 2 ends, bonus round begins, player with most in their bank is the onl
 
 third round
     word is displayed with RSTLNE revealed
-    player gets to guess 3 consenants and 1 vowel, no cost
-    once they make their guess, those consenants and vowel are revealed
+    player gets to guess 3 consonants and 1 vowel, no cost
+    once they make their guess, those consonants and vowel are revealed
     they have 5 seconds to guess word
         if timer runs out, they lost
         if guessed wrong, they lost
