@@ -1,94 +1,172 @@
 initialize a list for the three players
-initialize a list for wheel with 24 segments players can land on, in order of the wheel 
-initialize dictionary for players' money with player1, player2, player3 and 0 for the values
-initialize win list of who won round
+initialize a list for wheel with segments players can land on, in order of the wheel 
 initalize list of words with only 5 letters and more
 
-who goes first function:
+initialize dictionary for players' permanent money with player1, player2, player3 and 
+0 for the values
+
+who goes first function
     randomly pick from 3 players
     return current player
 
-who goes next function:
+who goes next function
     find key for current player in list
     if 1, set current player to 2
-    if 2, set current player to 2
+    if 2, set current player to 3
     if 3, set current player to 1
+    return current player
 
-play round function:
+play round function
     randomly pick word from list of words
     display word
-    set round money to 0
-    set spin money to 0
-    menu: player pick from 4 choices
-        1. buy a vowel, 
-        2. spin the wheel to guess a consenant, 
-        3. guess a consenant or 
-        4.guess the word
-    validate their input from 1-4
-    if 1. buy a vowel
-        if they want to buy a vowel
-            check bank account
-            if more than 250, prompt for guess
-                validate guess
-                if vowel is not in word
-                    they lose 250 and their turn ends
-                if vowel is in word
-                    they lose 250 and continues turn
-                    back to menu
-            if they don't have 250 in bank
-                rechoose from menu
-    if 2. spin the wheel to guess a consenant
-        spin the wheel
-        if wheel segment is bankruptcy
-            they lose $ for that round and their turn ends
-        if wheel segment is lose a turn
-            they get the $ for that round and their turn ends
-        if wheel segment is free spin
-            they get an extra spin at the end of their turn
-        if wheel segment is a number
-            add number to spin money
-            they guess a consenant
-        prompt player for a consenant
-        validate input
-        if consenant in already guessed consenant list
-            tell them already guessed, prompt again
+    initialize turn money to 0
+    initialize dictionary for players' round money with player1, player2, player3 and 0 for the values
+    initialize spin money to 0
+
+    who goes first function to pick first player
+
+    spin the wheel function
+    if wheel segment is bankruptcy
+        their turn ends & next player goes
+        who goes next function
+    if wheel segment is lose a turn
+        their turn ends & next player goes
+        who goes next function
+    if wheel segment is a number
+        set spin money to $amount
+        prompt them for consenant
+        validate consenant
         if consenant is not in word
-            they get the $ for that round and their turn ends
-        if consenant in word
-            count how many times <x>, they get <x> times the current spin $ and their turn continues
-            if word is complete
-                round ends and add to win list current play name            
-            back to menu
-    if 3. guess a consenant
-        if there's current spin money   
-            prompt player for a consenant
-            validate input
-            if consenant in already guessed consenant list
-                tell them already guessed, prompt again
-            if consenant is not in word
-                they get the $ for that round and their turn ends
-            if consenant in word
-                count how many times <x>, they get <x> times the current spin $ and their turn continues
-                if word is complete
-                    round ends and add to win list current play name
-                back to menu
-        if there isn't current spin money
-            tell them spin first, back to menu
-    if 4. guess the word
-        if they guess word right
-            they get the $ for that round and the round ends
-            add to win list current play name
-        if they guessed the wrond word 
-            they get the $ for that round and their turn ends
+            their turn ends & next player goes
+            who goes next function
+        if consenant is in word
+            display word
+            count how many times the consenant appears 
+            they get <x> multiply the spin $amount they landed on added to their round money                     
+            go into second turn
     
+    find out if word only have vowels left unrevealed 
+    if not
+        display menu from player and prompt player to pick from 3 choices
+            1. buy a vowel
+            2. spin the wheel to guess a consenant
+            3. guess the word
+
+        validate their input from 1-3
+
+        if 1. buy a vowel
+            if they want to buy a vowel
+                check round money
+                if more than 250, prompt for guess
+                    validate guess
+                    if vowel is not in word
+                        they lose 250 from round money 
+                        their turn ends & next player goes
+                        who goes next function
+                    if vowel is in word
+                        they lose 250 from round money
+                        display word
+                        back to menu
+                        if word is complete
+                            display word
+                            add round money to permanent money
+                            round ends 
+                        else:
+                            back to menu
+                if they don't have 250 in round money
+                    back to menu
+
+        if 2. spin the wheel to guess a consenant
+            spin the wheel function
+            if wheel segment is bankruptcy
+                set round money to 0
+                their turn ends & next player goes
+                who goes next function
+            if wheel segment is lose a turn
+                add turn money to round money
+                their turn ends & next player goes
+                who goes next function
+            if wheel segment is a number
+                set spin money to $amount
+                prompt them for consenant
+                validate consenant
+                if consenant in already guessed consenant list
+                    tell them already guessed
+                    prompt again
+                if consenant is not in word
+                    add turn money to round money
+                    their turn ends & next player goes
+                    who goes next function
+                if consenant is in word
+                    display word
+                    count how many times the consenant appears 
+                    they get <x> multiply the spin $amount they landed on added to their round money
+                    if word is complete
+                        display word
+                        add round money to permanent money
+                        round ends 
+                    else:
+                        back to menu
+
+        if 3. guess the word
+            prompt them for word
+            validate word
+            if they guess word right
+                add round money to permanent money
+                round ends
+            if they guessed the wrong word 
+                add turn money to round money
+                their turn ends & next player goes
+                who goes next function
+
+    if so, player is limited to only 2 choices
+        display menu from player and prompt player to pick from 3 choices
+            1. buy a vowel
+            2. guess the word 
+
+        validate their input from 1-2
+
+        if 1. buy a vowel
+            if they want to buy a vowel
+                check round money
+                if more than 250, prompt for guess
+                    validate guess
+                    if vowel is not in word
+                        they lose 250 from round money 
+                        their turn ends & next player goes
+                        who goes next function
+                    if vowel is in word
+                        they lose 250 from round money
+                        display word
+                        back to menu
+                        if word is complete
+                            display word
+                            add round money to permanent money
+                            round ends 
+                        else:
+                            back to menu
+                if they don't have 250 in round money
+                    back to menu
+
+        if 2. guess the word
+            prompt them for word
+            validate word
+            if they guess word right
+                display word
+                add round money to permanent money
+                round ends
+            if they guessed the wrong word 
+                add turn money to round money
+                their turn ends & next player goes 
+                who goes next function
+
 spin the wheel function
     create wheel segment string
     random pick from wheel list, assign to wheel segment
     return wheel segment
 
 bonus round function
-    pick player with highest bank account 
-        if tied, player with most game won ??? if tied again?
+    pick player with highest permanent money 
     randomly pick word from list of words
     display word with with R-S-T-L-N-E revealed
     prompt player to guess 3 consenants and 1 vowel
@@ -99,19 +177,16 @@ bonus round function
     prompt them for input
         if timer runs out
             they lost
-        if their input is not word
+        if their input is not the word
             they lost
-        if input is word
-            they win their bank money and a create
+        if input is the word
+            they win their bank money and 50k
     game ends
 
-
-
-who goes first function to pick first player
-play round function
-who goes next function
-play round function
-
+play round function for round 1
+play round function for round 2
 bonus round function
+
+
 
 
