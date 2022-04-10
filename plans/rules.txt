@@ -4,7 +4,7 @@ beginning of round, the word is diplayed, randomly picked player goes first
 
 
 first turn for a player
-    spin the wheel to guess a consonant
+    spin the wheel to guess a consonant or guess the word in case other players went ahead of you
         if they land on bankruptcy, their turn ends
         if they land on lose a turn, their turn ends
         if they land on $, they guess a consonant
@@ -14,6 +14,10 @@ first turn for a player
                     they amount they landed on into their round money and their turn continues
                     go into second turn
                 if not consonant, their turn ends
+    guess the word
+        if they guess word right, no one gets money for that round
+        round ends
+        if they guessed the wrong word, their turn ends
 
 second & repeating turn for a player
     if word is limited to only vowels, only option 1 and 3 will be available 
@@ -23,21 +27,21 @@ second & repeating turn for a player
             otherwise they have to rechoose
             if guess is not in word, already guessed, not a vowel, they lose 250 and their turn ends
             if vowel is in word, they lose 250 and continues turn
+                if word is complete, player gets $, round ends
         2. spin the wheel to guess a consonant
             spin the wheel 
                 if they land on bankruptcy they lose $ for that turn and their turn ends
                 if they land on lose a turn, they get the $ for that turn and their turn ends
                 if they land on $, they guess a consonant 
             guessing a consonant
-                if consonant is in word, count how many times <x>, they get <x> times current 
-                spin money and their turn continues
+                if consonant is in word, count how many times <x>
+                    they get $
+                    if word is complete, player gets $, round ends
                 if guess is not a consonant or consonant is not in word, they get the $ for that turn and their turn ends
         5. guess the word
-                if they guess word right, they get the $ for that turn, they get to keep the 
-                money from that round 
-                and the round ends
-                if they guessed the wrond word, they get the $ for that turn and their turn 
-                ends
+                if they guess word right, they get the $
+                round ends
+                if they guessed the wrong word, their turn ends
 
 when a turn ends, the next chronological player goes
 when round 1 ends, round 2 begins, round 2 is exact of round 1
