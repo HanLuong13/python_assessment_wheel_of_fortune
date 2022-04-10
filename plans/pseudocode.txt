@@ -99,12 +99,16 @@ play round function
                 validate consonant
                 if consonant in already guessed consonant list
                     tell them already guessed
-                    prompt again
+                    their turn ends & next player goes
                 if consonant is not in word
                     add turn money to round money
                     their turn ends & next player goes
                     who goes next function
-                if consonant is in word
+                if consonant is invalid
+                    add turn money to round money
+                    their turn ends & next player goes
+                    who goes next function
+                if consonant is in word 
                     display word
                     count how many times the consonant appears 
                     they get <x> multiply the spin $amount they landed on added to their round money
