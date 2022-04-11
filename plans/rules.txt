@@ -2,7 +2,6 @@ rules:
 start with 3 players and 3 rounds
 beginning of round, the word is diplayed, randomly picked player goes first
 
-
 first turn for a player
     spin the wheel to guess a consonant or guess the word in case other players went ahead of you
         if they land on bankruptcy, their turn ends
@@ -15,7 +14,7 @@ first turn for a player
                     go into second turn
                 if not consonant, their turn ends
     guess the word
-        if they guess word right, no one gets money for that round
+        if they guessed word right, no one gets money for that round
         round ends
         if they guessed the wrong word, their turn ends
 
@@ -27,7 +26,7 @@ second & repeating turn for a player
             otherwise they have to rechoose
             if guess is not in word, already guessed, not a vowel, they lose 250 and their turn ends
             if vowel is in word, they lose 250 and continues turn
-                if word is complete, player gets $, round ends
+                if word is complete, player gets to keep $, round ends
         2. spin the wheel to guess a consonant
             spin the wheel 
                 if they land on bankruptcy they lose $ for that turn and their turn ends
@@ -36,7 +35,7 @@ second & repeating turn for a player
             guessing a consonant
                 if consonant is in word, count how many times <x>
                     they get $
-                    if word is complete, player gets $, round ends
+                    if word is complete, player gets to keep $, round ends
                 if guess is not a consonant or consonant is not in word, they get the $ for that turn and their turn ends
         5. guess the word
                 if they guess word right, they get the $
@@ -51,7 +50,7 @@ third round
     word is displayed with RSTLNE revealed
     player gets to guess 3 consonants and 1 vowel, no cost
     once they make their guess, those consonants and vowel are revealed
-    they have 5 seconds to guess word
+    they have 5 seconds to guess the word
         if timer runs out, they lost
         if guessed wrong, they lost
         if guessed right, they win the money in their bank and a prize

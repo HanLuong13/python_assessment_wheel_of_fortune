@@ -1,4 +1,4 @@
-initialize a list for the three players
+initialize a list for the three players 
 initialize a list for wheel with segments players can land on, in order of the wheel 
 initialize list of words with only 5 letters and more
 
