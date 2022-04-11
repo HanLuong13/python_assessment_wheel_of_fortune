@@ -1,7 +1,6 @@
 import random
 from threading import Timer
 
-
 # initialize a list for the three players
 player_list = ['Player 1', 'Player 2', 'Player 3']
 
@@ -36,11 +35,12 @@ out_of_time=False
 
 # to play entire round function
 def play_round():
-    global word, already_guessed_list, word_display, current_player, player_num_turn, \
-        round_bank, player_first_turn, spin_result, continues_turn, continues_round
+    global word, guessed_right_list, word_display, current_player, player_num_turn, \
+        round_bank, player_first_turn, spin_result, continues_turn, continues_round, not_in_word_valid_guesses
 
-    #initialize list of already guessed letter 
-    already_guessed_list = []
+    #initialize list of guessed right letter and the all_guesses 
+    guessed_right_list = []
+    not_in_word_valid_guesses = []
     # initialize a list for players' round money 
     round_bank = {}
     for player in player_list:
@@ -61,7 +61,7 @@ def play_round():
 
     # random pick who goes first
     current_player = random.choice(player_list)
-    print('The first player to go is', current_player, '\n')
+    print(f'The first player to go is {current_player}.')
 
 
     player_first_turn = {'Player 1' : True, 'Player 2' : True, 'Player 3' : True}
@@ -73,8 +73,8 @@ def play_round():
     while continues_round:
 
         while player_first_turn[current_player]:
-            print('What do you want to do?')
-            print('(1) Spin wheel to guess a consenant')
+            print(f'\nWhat does {current_player} want to do?')
+            print('(1) Spin wheel to guess a consonant')
             print('(2) Guess the word \n')
 
             input_valid = False
@@ -110,9 +110,9 @@ def play_round():
             #if word has more than vowels left
             if not continue_only_vowels:
                 # display menu from player and prompt player to pick from 3 choices
-                print('What do you want to do next?')
+                print(f'\nWhat does {current_player} want to do next?')
                 print('(1) Buy a vowel')
-                print('(2) Spin wheel to guess a consenant')
+                print('(2) Spin wheel to guess a consonant')
                 print('(3) Guess the word \n')
                 input_valid = False
                 while not input_valid:
@@ -139,7 +139,7 @@ def play_round():
                     guess_word()
             # if only vowels are left
             elif continue_only_vowels:
-                print('There\'s only vowels left. You can only choose from 2 optiosn below.')
+                print(f'There\'s only vowels left. {current_player} can only choose from 2 options below.')
                 print('(1) Buy a vowel')
                 print('(2) Guess the word')
                 #validating input
@@ -168,10 +168,10 @@ def play_round():
 
 #to display word to show progress
 def display_word():
-    global word, already_guessed_list, word_display
+    global word, guessed_right_list, word_display
     word_display = ''    
     for letter in word:
-        if letter in already_guessed_list:
+        if letter in guessed_right_list:
             word_display += letter
         else:
             word_display += '_'
@@ -182,7 +182,7 @@ def spin_wheel():
     global wheel, player_num_turn, player_first_turn, round_bank, continues_turn
     segment = random.choice(wheel)
     # segment = 'Bankruptcy'
-    print(f'\nWheel is spinning... You landed on {segment}.\n')
+    print(f'\nWheel is spinning... {current_player} landed on {segment}.\n')
 
     if player_first_turn[current_player] and segment == 'Bankruptcy':
         player_first_turn[current_player] = False
@@ -200,26 +200,35 @@ def spin_wheel():
 
 #to guess a consonant
 def guess_consonant():
-    global already_guessed_list, word, current_player, spin_result, continues_turn, \
-        word_display, continues_round
-    guess = input('Please guess a consonant: \n')
-    print('\n')
+    global guessed_right_list, word, current_player, spin_result, continues_turn, \
+        word_display, continues_round, not_in_word_valid_guesses
+
+    input_invalid = False
+    while not input_invalid:
+        guess = input('Enter a consonant:\n')
+        if guess.isalpha():
+            guess = guess.lower()
+            input_invalid = True
+        else: 
+            print('Not a letter. Try again.')
+
 
     # if it's the player's first time
     if player_first_turn[current_player]:
-        # if consonant in already guessed
-        if guess in already_guessed_list and guess in vowel_list: 
-            print('Already guessed. It\'s also a vowel. You lose a turn.')
+
+        # if guess is already guessed and not a consonant
+        if guess in guessed_right_list and not guess in consonant_list: 
+            print(f'\nAlready guessed and not a consonant. {current_player} loses the turn.')
             continues_turn[current_player] = False
 
-        # if consonant in already guessed
-        elif guess in already_guessed_list: 
-            print('Already guessed. You lose a turn.')
+        # if guess is already guessed
+        elif guess in guessed_right_list: 
+            print(f'\nAlready guessed. {current_player} loses the turn.')
             continues_turn[current_player] = False
             
-        # if guess is a consonant
-        elif guess in vowel_list: 
-            print('That\'s a vowel. You lose a turn.')
+        # if guess is not a consonant
+        elif not guess in consonant_list: 
+            print(f'\nNot a consonant. {current_player} loses the turn.')
             continues_turn[current_player] = False       
 
         # if consonant is in word
@@ -229,40 +238,38 @@ def guess_consonant():
                 if guess == letter:
                     letter_count +=1
             guess_money = spin_result * letter_count
-            already_guessed_list.append(guess) 
+            guessed_right_list.append(guess) 
             display_word()
-            print(f'You got it. {guess} is in the word {letter_count} times.\n')
-            print(f'You get {guess_money}')
+            print(f'\nYes. {guess} is in the word {letter_count} times.')
+            print(f'{current_player} gets {guess_money}')
             round_bank[current_player] += guess_money
-            print(round_bank)   
+            if find_unrevealed_letters():
+                round_is_done()            
 
-        # if consonant is not in word or invalid            
-        elif guess.isalpha and not guess in word:
-            print('Letter not in word. You lose your turn')
-            continues_turn[current_player] = False
-        #if guess in invalid
-        else:
-            print('Not a valid input. You lose your turn')
+        # if consonant is not in word          
+        elif not guess in word:
+            print(f'\nConsonant is not in word. {current_player} loses the turn.')
             continues_turn[current_player] = False
 
         #either way, first turn is done
         player_first_turn[current_player] = False
 
+
     #if not first turn
     elif not player_first_turn[current_player] and continues_turn[current_player]:
-        # if consonant in already guessed
-        if guess in already_guessed_list and guess in vowel_list: 
-            print('Already guessed. It\'s also a vowel. You lose your turn.')
+        # if guess is already guessed and not a consonant
+        if guess in guessed_right_list and not guess in consonant_list: 
+            print(f'\nAlready guessed and not a consonant. {current_player} loses the turn.')
             continues_turn[current_player] = False
 
-        # if consonant in already guessed
-        if guess in already_guessed_list: 
-            print('Already guessed. You lose your turn.')
+        # if guess is already guessed
+        elif guess in guessed_right_list: 
+            print(f'\nAlready guessed. {current_player} loses the turn.')
             continues_turn[current_player] = False
 
-        # if guess is a consonant
-        elif guess in vowel_list: 
-            print('That\'s a vowel. You lose your turn.')
+        # if guess is not a consonant
+        elif not guess in consonant_list: 
+            print(f'\nNot a consonant. {current_player} loses the turn.')
             continues_turn[current_player] = False   
 
         # if consonant is in word
@@ -272,89 +279,117 @@ def guess_consonant():
                 if guess == letter:
                     letter_count +=1
             guess_money = spin_result * letter_count
-            already_guessed_list.append(guess) 
+            guessed_right_list.append(guess) 
             display_word()
-            print(f'You got it. {guess} is in the word {letter_count} times.\n')
-            print(f'You get {guess_money}.')
-            round_bank[current_player] += guess_money
-            print(round_bank)  
+            print(f'\nYes. {guess} is in the word {letter_count} times.')
+            print(f'{current_player} gets ${guess_money}.')
+            round_bank[current_player] += guess_money 
             if find_unrevealed_letters():
                 round_is_done()
 
         # if consonant is not in word or invalid            
         elif guess not in word:
-            print('Letter not in word. You lose your turn')
+            print(f'Consonant is not in word. {current_player} loses the turn.')
             continues_turn[current_player] = False
 
-        #if guess in invalid
-        else:
-            print('Not a valid input. You lose your turn')
-            continues_turn[current_player] = False
-            
-    print('Current state of word is:', word_display)  
+    if guess not in guessed_right_list and guess in consonant_list:
+        not_in_word_valid_guesses.append(guess)
+
+    #keeping only unique values
+
+    #displaying information for players
+    print(f'\nCurrent round total is {round_bank}')
+    print(f'Previous valid guesses not in word are {not_in_word_valid_guesses}')       
+    print(f'Current state of word is: {word_display}')  
 
 
 
 #to buy a vowel
 def buy_vowel():
-    global round_bank, current_player, already_guessed_list, word, vowel_list, \
-        word_display, continues_round
+    global round_bank, current_player, guessed_right_list, word, vowel_list, \
+        word_display, continues_round, not_in_word_valid_guesses
     # check round money
     # if they don't have 250 in round money
     # back to menu    
     # current_bank = round_bank[current_player]
     if round_bank[current_player] < 250:
-        print('You don\'t have enough money from this round.' +
+        print(f'{current_player} does not have enough money from this round.' +
         'Try spinning the wheel to guess a consonant or guess the word.')
     # if more than 250, prompt for guess
     elif round_bank[current_player] >= 250:
-        guess = input('Enter a vowel:\n')
-        print('\n')
 
+        input_invalid = False
+        while not input_invalid:
+            guess = input('Enter a vowel:\n')
+            if guess.isalpha():
+                guess = guess.lower()
+                input_invalid = True
+            else:
+                print('Not a letter. Try again.')
+
+        # if guess is already guessed and not a vowel
+        if guess in guessed_right_list and not guess in consonant_list:
+            print(f'Already guessed and not a vowel. {current_player} loses 250 and turn ends.')
+        
+        # if guess is already guessed
+        elif guess in guessed_right_list:
+            print(f'Already guessed. {current_player} loses 250 and turn ends.')
+            round_bank[current_player] -= 250
+            continues_turn[current_player] = False 
+        
         # if guess is not a vowel
-        if not guess in vowel_list:
-            print('Your guess is not a vowel. You lose 250. Your turn ends.')
+        elif not guess in vowel_list:
+            print(f'Not a vowel. {current_player} loses 250 and turn ends.')
             round_bank[current_player] -= 250
             continues_turn[current_player] = False
-        # if their guess is already guessed
-        elif guess in already_guessed_list:
-            print('Already guessed. You lose 250. Your turn ends.')
-            round_bank[current_player] -= 250
-            continues_turn[current_player] = False   
+
         # if vowel is not in word                    
         elif not guess in word:
-            print('Vowel not in word. You lose 250. Better luck next time!')
+            print(f'Vowel is not in word. {current_player} loses 250 and turn ends.')
             round_bank[current_player] -= 250
             continues_turn[current_player] = False
+
         # if vowel is in word
         elif guess in word:
-            # add letter to already_guessed_list
-            already_guessed_list.append(guess)
+            # add letter to guessed_right_list
+            guessed_right_list.append(guess)
             round_bank[current_player] -= 250
             # count how many times the vowel appears 
             letter_count = 0
             for letter in word: 
                 if guess == letter:
                     letter_count +=1
-            print(f'You got it. {guess} is in the word {letter_count} times.')
-            print('250 is detracted. Your turn continues.')
+            print(f'Yes. {guess} is in the word {letter_count} times.')
+            print(f'250 is detracted. {current_player}\'s turn continues.')
             
             print(round_bank) 
             if find_unrevealed_letters():
                 round_is_done()
 
-    print('\nCurrent state of word is:', word_display)    
+        if guess not in guessed_right_list and guess in vowel_list:
+            not_in_word_valid_guesses.append(guess)
+
+    #keeping only unique values
+
+    #displaying information for players
+    print(f'\nCurrent round total is {round_bank}')
+    print(f'Previous valid guesses not in word are {not_in_word_valid_guesses}')       
+    print(f'Current state of word is: {word_display}')     
                 
 def guess_word():
     global round_bank, current_player, word, continues_round, continues_turn, player_first_turn
-    player_input = input('Enter your word guess:\n').lower()
+    player_input = input('Enter word guess:\n')
     print('\n')
     if player_input == word:
         round_is_done()
     else: 
-        print('Not the word. You lose your turn.')
+        print(f'Not the word. {current_player} loses the turn.')
         player_first_turn[current_player] = False
         continues_turn[current_player] = False
+        print(f'\nCurrent round total is {round_bank}')
+        print(f'Previous valid guesses not in word are {not_in_word_valid_guesses}')       
+        print(f'Current state of word is: {word_display}')       
+        
 
 #find out if word is fully revealed
 def find_unrevealed_letters():
@@ -367,10 +402,10 @@ def find_unrevealed_letters():
 
 # find out if word only have vowels left unrevealed 
 def only_vowels():
-    global already_guessed_list, word
+    global guessed_right_list, word
     letters_left = ''
     for letter in word:
-        if not letter in already_guessed_list:
+        if not letter in guessed_right_list:
             letters_left += letter   
     count_consonants = 0
     for letter in letters_left:
@@ -386,8 +421,8 @@ def round_is_done():
     global continues_round, round_bank, current_player, permanent_bank, player_first_turn,\
         continues_turn 
     permanent_bank[current_player] += round_bank[current_player]
-    print('Round in done. You won this round!')
-    print('The round total is', permanent_bank)
+    print(f'Round is done. {current_player} won this round.')
+    print(f'The game total is {permanent_bank}\n')
 
     #toggle off everything so close down round
     player_first_turn[current_player] = False
@@ -406,21 +441,21 @@ def who_goes_next():
     # if 3, set current player to 1
     elif current_player == 'Player 3':
         current_player = 'Player 1'  
-    print(f'The new player to go is {current_player}')
+    print(f'\nThe new player to go is {current_player}.')
 
     return current_player
 
 
 
-permanent_bank = {'Player 1': 100, 'Player 2': 200, 'Player 3': 0}
+
 
 def time_ran_out():
-    global out_of_time
+    global out_of_time, word
     out_of_time=True
-    print('You ran out of time. PLease hit enter key to continue.')
+    print('5 seconds are up.')
 
 def play_third_round():
-    global permanent_bank, already_guessed_list, word, consonant_list, vowel_list, out_of_time
+    global permanent_bank, guessed_right_list, word, consonant_list, vowel_list, out_of_time
 
     free_letters = 'rstlne'
     # ['r','s','t','l','n','e']
@@ -434,17 +469,16 @@ def play_third_round():
     print(f'The player for the final and third round is {final_player}')
 
     #initialize list of already guessed letter 
-    already_guessed_list = []
+    guessed_right_list = []
 
     # randomly pick word from list of words
     word = random.choice(word_list)
-
     show_free_letters = ''
 
     #append letter in free letter to show and list of guesses
     for letter in free_letters:
         show_free_letters += letter + ' '
-        already_guessed_list.append(letter)
+        guessed_right_list.append(letter)
 
     #display both free letters and word with those letters shown
     print('Word is shown with these letters:', show_free_letters)
@@ -455,14 +489,14 @@ def play_third_round():
     while input_invalid:
         print('You get 3 consonants and 1 vowel.')
         print('Enter them all at once, no spaces.')
-        player_input = input('Here:\n')
+        player_input = input('Here:\n').lower()
 
         consonant_count = 0
         vowel_count = 0
         repeat = 0
         for letter in player_input:
             #counting consonants and vowels and letters already given
-            if letter in already_guessed_list:
+            if letter in guessed_right_list:
                 repeat += 1
             if letter in consonant_list:
                 consonant_count += 1
@@ -481,7 +515,7 @@ def play_third_round():
 
     #successful input, add to already guessed
     for letter in player_input:
-        already_guessed_list.append(letter)
+        guessed_right_list.append(letter)
     
     print('\nThe word is now:', display_word(), '\n')
 
@@ -489,27 +523,27 @@ def play_third_round():
     # while not out_of_time:
     timer = Timer(5, time_ran_out)
     timer.start() 
-    player_guess = input('You have 5 seconds. Enter your guess: \n')
+    player_guess = input('You have 5 seconds. Enter your guess: \n').lower()
  
 
     if player_guess == word and out_of_time:  
         print('You ran out of time, but it is the word.')
     elif player_guess == word and not out_of_time: 
-        print(f'Yes, you got it! You won your round money of ${permanent_bank[final_player]} and $50000.')
+        print(f'Yes, you got it. You won your round money of ${permanent_bank[final_player]} and $50000.')
         total_prize = permanent_bank[final_player] + third_round_prize
-        print(f'Congratultions. That\'s a total of ${total_prize}.')
+        print(f'Congratulations. That\'s a total of ${total_prize}.')
     elif player_guess != word and out_of_time:
-        print('Better luck next time!')
+        print('Better luck next time.')
     else:
         print('Not the word.')
 
 
 
 
-print('Welcome to Wheel of Fortune! \n')
+print('Welcome to Wheel of Fortune. \n')
 play_round()
-print('Alright! Second round!')
+print('Alright... Second round.\n')
 play_round()
 play_third_round()
-print('Thank you for playing Wheel of Fortune.')
+print('\nThanks for playing Wheel of Fortune.')
 
